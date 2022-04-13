@@ -1,0 +1,6 @@
+.terraform/
+.env
+output/
+.terraform.lock.hcl
+plan.out
+terraform.tfstate*
