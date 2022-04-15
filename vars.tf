@@ -75,7 +75,7 @@ variable "GLOBAL_RESOURCENAME_PREFIX_ALPHANUM" {
 
 variable "vm1_host_user" {
   type    = string
-  default = "user"
+  default = "vm1user"
 }
 
 variable "vm1_host_password" {

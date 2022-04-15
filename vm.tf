@@ -5,12 +5,11 @@ resource "azurerm_public_ip" "publicIp1" {
   resource_group_name = azurerm_resource_group.rgMain.name
   allocation_method   = "Static"
   ip_version          = "IPv4"
-
 }
 
 
 resource "azurerm_network_interface" "nicMain" {
-  name                = "${var.GLOBAL_RESOURCENAME_PREFIX}nicVm1"
+  name                = "${var.GLOBAL_RESOURCENAME_PREFIX}nic${local.vmSuffixCamel}"
   location            = azurerm_resource_group.rgMain.location
   resource_group_name = azurerm_resource_group.rgMain.name
 
@@ -26,18 +25,18 @@ resource "azurerm_network_interface" "nicMain" {
 
 
 resource "azurerm_virtual_machine" "vm1" {
-  name                = "${var.GLOBAL_RESOURCENAME_PREFIX}vm1"
+  name                = "${var.GLOBAL_RESOURCENAME_PREFIX}${local.vmSuffix}"
   location            = azurerm_resource_group.rgMain.location
   resource_group_name = azurerm_resource_group.rgMain.name
 
   network_interface_ids = [azurerm_network_interface.nicMain.id]
-  vm_size               = "Standard_B1s"
+  vm_size               = "Standard_B2s"
 
   storage_image_reference {
-    publisher = "OpenLogic"
-    offer     = "Centos"
-    sku       = "7.5"
-    version   = "latest"
+    publisher = "Canonical"
+    offer     = "UbuntuServer"
+    sku       = "18_04-lts-gen2"
+    version   = "18.04.202204010"
   }
 
   delete_os_disk_on_termination = true
@@ -49,7 +48,7 @@ resource "azurerm_virtual_machine" "vm1" {
   }
 
   os_profile {
-    computer_name  = "vm1"
+    computer_name  = local.vmSuffix
     admin_username = var.vm1_host_user
     admin_password = var.vm1_host_password
   }
@@ -67,7 +66,8 @@ resource "azurerm_virtual_machine" "vm1" {
 data "template_file" "userdataVm1" {
   template = file("./userdata.tpl")
   vars = {
-    password = var.vm1_host_password
+    password  = var.vm1_host_password
+    vmName    = local.vmSuffix
   }
 }
 
@@ -105,4 +105,13 @@ resource "null_resource" "vmProvision" {
     azurerm_public_ip.publicIp1,
     azurerm_virtual_machine.vm1
   ]
+  triggers = {
+    id = azurerm_virtual_machine.vm1.id
+  }
+}
+
+
+locals {
+  vmSuffix      = "vm1"
+  vmSuffixCamel = "Vm1"
 }
