@@ -31,6 +31,7 @@ sudo chmod a+x ./bazel
 sudo mv ./bazel /usr/bin/bazel
 git clone https://github.com/envoyproxy/nighthawk
 cd nighthawk/
+git checkout ba3b5d0bcc57c334f34e1c323c6bb564781caa60
 bazel build -c opt //:nighthawk
 
 echo "Provisioning Finished!"
