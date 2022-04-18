@@ -19,6 +19,10 @@ sudo apt install -y nginx git wget gcc python3 vim curl autoconf automake cmake 
 sudo ln -s /usr/bin/gcc-9 /usr/bin/gcc
 sudo systemctl restart nginx
 
+# Install bazelisk instead of bazel
+sudo wget -O /usr/local/bin/bazel https://github.com/bazelbuild/bazelisk/releases/latest/download/bazelisk-linux-$([ $(uname -m) = "aarch64" ] && echo "arm64" || echo "amd64")
+sudo chmod +x /usr/local/bin/bazel
+
 # Hey setup
 mkdir benchmark
 cd benchmark/
@@ -26,13 +30,10 @@ wget -O hey https://hey-release.s3.us-east-2.amazonaws.com/hey_linux_amd64
 chmod 744 ./hey
 
 # Envoy Nighthawk setup
-wget -O bazel https://github.com/bazelbuild/bazel/releases/download/5.1.1/bazel-5.1.1-linux-x86_64
-sudo chmod a+x ./bazel
-sudo mv ./bazel /usr/bin/bazel
 git clone https://github.com/envoyproxy/nighthawk
 cd nighthawk/
 git checkout ba3b5d0bcc57c334f34e1c323c6bb564781caa60
-bazel build -c opt //:nighthawk
+# bazel build -c opt //:nighthawk # Run it manually
 
 echo "Provisioning Finished!"
 

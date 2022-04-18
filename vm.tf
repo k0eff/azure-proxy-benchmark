@@ -30,7 +30,7 @@ resource "azurerm_virtual_machine" "vm1" {
   resource_group_name = azurerm_resource_group.rgMain.name
 
   network_interface_ids = [azurerm_network_interface.nicMain.id]
-  vm_size               = "Standard_B2s"
+  vm_size               = "Standard_B4ms"
 
   storage_image_reference {
     publisher = "Canonical"
