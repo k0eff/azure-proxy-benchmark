@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-cfg
+data:
+  nginx.conf: |
+    server {
+      listen 80
+      location / {
+        proxy_pass svc-nginx.default.svc.cluster.local:80
+      }
+    }
+  

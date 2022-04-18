@@ -5,7 +5,7 @@ metadata:
   labels:
     app: nginx
 spec:
-  replicas: 0
+  replicas: 1
   selector:
     matchLabels:
       app: nginx
@@ -19,10 +19,11 @@ spec:
         image: nginx:1.14.2
         ports:
         - containerPort: 80
-      topologySpreadConstraints:
-        - maxSkew: 1
-          whenUnsatisfiable: ScheduleAnyway
-          topologyKey: zone
-          labelSelector:
-            matchLabels:
-              app: nginx
+        volumeMounts:
+        - name: nginx-config-file
+          mountPath: "/etc/nginx/nginx.conf"
+          subPath: "nginx.conf"
+      volumes:
+      - name: nginx-config-file
+        configMap:
+          name: nginx-cfg
