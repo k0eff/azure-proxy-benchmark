@@ -63,6 +63,20 @@ resource "azurerm_network_security_rule" "rule30003" {
   resource_group_name          = azurerm_resource_group.rgMain.name
 }
 
+resource "azurerm_network_security_rule" "rule30005" {
+  name                         = "${var.GLOBAL_RESOURCENAME_PREFIX}rule30005_inb"
+  priority                     = 160
+  direction                    = "Inbound"
+  access                       = "Allow"
+  protocol                     = "Tcp"
+  source_port_range            = "*"
+  destination_port_range       = "30005"
+  source_address_prefix        = "*"
+  destination_address_prefixes = flatten([var.GLOBAL_VNET_SUBNETS.aks])
+  network_security_group_name  = azurerm_network_security_group.sgMain.name
+  resource_group_name          = azurerm_resource_group.rgMain.name
+}
+
 resource "azurerm_network_security_rule" "rule443" {
   name                         = "${var.GLOBAL_RESOURCENAME_PREFIX}rule443_inb"
   network_security_group_name  = azurerm_network_security_group.sgAks.name

@@ -5,9 +5,8 @@ metadata:
 data:
   nginx.conf: |
     server {
-      listen 80
+      listen 80;
       location / {
-        proxy_pass svc-nginx.default.svc.cluster.local:80
+        proxy_pass http://svc-apache.default.svc.cluster.local:80;
       }
     }
-  
