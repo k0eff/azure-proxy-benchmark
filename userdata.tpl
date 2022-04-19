@@ -3,10 +3,9 @@ set -x
 echo ${password} | sudo -S -u root -v
 
 sudo apt update
+sudo apt install -y apache2-utils
 
 sudo apt-get install -y autoconf automake cmake curl libtool make ninja-build patch python3-pip unzip virtualenv clang
-
-
 
 # Install bazelisk instead of bazel
 sudo wget -O /usr/local/bin/bazel https://github.com/bazelbuild/bazelisk/releases/latest/download/bazelisk-linux-$([ $(uname -m) = "aarch64" ] && echo "arm64" || echo "amd64")
