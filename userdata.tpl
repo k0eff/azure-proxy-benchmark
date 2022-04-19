@@ -15,9 +15,12 @@ sudo apt update
 export DEBIAN_FRONTEND=noninteractive
 echo '* libraries/restart-without-asking boolean true' | sudo debconf-set-selections
 #sudo DEBIAN_FRONTEND=noninteractive apt-get -yq upgrade
-sudo apt install -y nginx git wget gcc python3 vim curl autoconf automake cmake curl libtool make ninja-build patch python3-pip unzip virtualenv
-sudo ln -s /usr/bin/gcc-9 /usr/bin/gcc
-sudo systemctl restart nginx
+# sudo apt install -y nginx git wget gcc python3 vim curl autoconf automake cmake curl libtool make ninja-build patch python3-pip unzip virtualenv
+# sudo ln -s /usr/bin/gcc-9 /usr/bin/gcc
+# sudo systemctl restart nginx
+sudo apt-get install autoconf automake cmake curl libtool make ninja-build patch python3-pip unzip virtualenv
+
+
 
 # Install bazelisk instead of bazel
 sudo wget -O /usr/local/bin/bazel https://github.com/bazelbuild/bazelisk/releases/latest/download/bazelisk-linux-$([ $(uname -m) = "aarch64" ] && echo "arm64" || echo "amd64")
@@ -33,6 +36,8 @@ chmod 744 ./hey
 git clone https://github.com/envoyproxy/nighthawk
 cd nighthawk/
 git checkout ba3b5d0bcc57c334f34e1c323c6bb564781caa60
+echo "build --config=clang" >> user.bazelrc
+
 # bazel build -c opt //:nighthawk # Run it manually
 
 echo "Provisioning Finished!"
