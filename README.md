@@ -41,8 +41,10 @@ vmIpPub = "104.45.94.206"
 ```
 Then:
 ```
-~   ssh vm1user@104.45.94.206 -p 22 -i ~/.ssh/key-bede-testing -o StrictHostKeyChecking=no
+~   ssh vm1user@104.45.94.206 -p 22 -i ~/.ssh/key -o StrictHostKeyChecking=no
 ```
+( In order to change the ssh key, please generate a new one and change /vm.tf:60)
+
 Execution of a few tests
 
 ```
