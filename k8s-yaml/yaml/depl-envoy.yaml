@@ -21,7 +21,7 @@ spec:
         - containerPort: 80
         volumeMounts:
         - name: envoy-config-file
-          mountPath: "/etc/front-envoy.yaml"
+          mountPath: "/etc/envoy/envoy.yaml"
           subPath: "envoy.conf"
       volumes:
       - name: envoy-config-file
