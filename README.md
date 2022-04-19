@@ -43,7 +43,7 @@ Then:
 ```
 ~   ssh vm1user@104.45.94.206 -p 22 -i ~/.ssh/key -o StrictHostKeyChecking=no
 ```
-( In order to change the ssh key, please generate a new one and change /vm.tf:60)
+( In order to change the ssh key, please generate a new one and change /vm.tf:60 https://github.com/k0eff/azure-proxy-benchmark/blob/f690f8d90bf535bd35ad5d1199e65636259017d3/vm.tf#L60)
 
 Execution of a few tests
 
