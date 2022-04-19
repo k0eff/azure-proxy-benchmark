@@ -6,6 +6,7 @@ data:
   nginx.conf: |
     server {
       listen 80;
+      access_log   /dev/null  main;
       location / {
         proxy_pass http://svc-apache.default.svc.cluster.local:80;
       }
