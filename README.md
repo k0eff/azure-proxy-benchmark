@@ -1,7 +1,7 @@
 # A proxy benchmark in Azure environment
 
 ## What is it and how it works?
-
+This is a benchmark, which would serve for load testing various reverse proxies/load balancers and this way prove which is the best one for the given specific needs.
 
 Currently in the repo we have the following setup:
 
