@@ -22,7 +22,7 @@ spec:
         volumeMounts:
         - name: envoy-config-file
           mountPath: "/etc/envoy/envoy.yaml"
-          subPath: "envoy.conf"
+          subPath: "envoy.yaml"
       volumes:
       - name: envoy-config-file
         configMap:
