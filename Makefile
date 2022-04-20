@@ -22,3 +22,7 @@ untaint:
 
 refresh:
 	terraform refresh
+
+import:
+	terraform import $(r) $(u)
+	

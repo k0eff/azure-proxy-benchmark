@@ -34,9 +34,9 @@ resource "azurerm_virtual_machine" "vm1" {
 
   storage_image_reference {
     publisher = "Canonical"
-    offer     = "UbuntuServer"
-    sku       = "18_04-lts-gen2"
-    version   = "18.04.202204010"
+    offer     = "0001-com-ubuntu-server-focal"
+    sku       = "20_04-lts-gen2"
+    version   = "20.04.202204190"
   }
 
   delete_os_disk_on_termination = true
