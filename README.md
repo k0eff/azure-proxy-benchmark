@@ -5,7 +5,7 @@ This is a Terraform project aiming to provide a complete benchmark infrastructur
 
 
 # How to run this Terraform project
-There's a provided Makefile. To run Terraform, you need to: 
+There's a provided Makefile which loads the required Azure secrets. To run Terraform, you need to: 
 1. Copy .env.example as `.env` and apply the given parameters from your Azure account
 2. Edit /vars.tf and change GLOBAL_RESOURCENAME_PREFIX and GLOBAL_RESOURCENAME_PREFIX_ALPHANUM to whatever suits your needs
 3. Run `make plan` and `make apply`
