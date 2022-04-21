@@ -3,11 +3,46 @@ kind: ConfigMap
 metadata:
   name: nginx-cfg
 data:
-  nginx.conf: |
+  default.conf: |
     server {
-      listen 80;
-      access_log   /dev/null  main;
+      listen                80;
+      access_log            /dev/null  main;
       location / {
-        proxy_pass http://svc-apache.default.svc.cluster.local:80;
+        proxy_pass          http://k8s;
       }
+    }
+    upstream k8s {
+      server svc-apache.default.svc.cluster.local:80 fail_timeout=10s;
+    }
+  nginx.conf: |
+    user www-data;
+    worker_processes 2;
+    pid /run/nginx.pid;
+    include /etc/nginx/modules-enabled/*.conf;
+    error_log /var/log/nginx/error.log;
+
+    events {
+      worker_connections 10000;
+    }
+
+    http {
+      include /etc/nginx/mime.types;
+      default_type application/octet-stream;
+      log_format main '{ "timestamp":"$time_iso8601", "remote_addr": "$remote_addr", "remote_user": "$remote_user", "body_bytes_sent": "$body_bytes_sent", "request_time": "$request_time", "status": "$status", "request": "$request", "request_method": "$request_method", "http_referrer": "$http_referer", "http_user_agent": "$http_user_agent", "http_x_forwarded_for": "$http_x_forwarded_for", "upstream_addr": "$upstream_addr",  "upstream_response_time": "$upstream_response_time", "upstream_status": "$upstream_status", "cache_status": "$upstream_cache_status", "tenant": "$host","host": "$server_name","remote_port":"$remote_port","server_protocol":"$server_protocol","request_length":"$request_length","scheme":"$scheme","query_string":"$query_string","bytes_sent":"$bytes_sent","upstream_bytes_received":"$upstream_bytes_received","x_spine_route":"$upstream_http_x_spine_route","x_gateway_person_id":"$upstream_http_x_gateway_person_id","client_addr":"$realip_remote_addr","ssl_cipher":"$ssl_cipher","ssl_protocol":"$ssl_protocol"}';
+      access_log /var/log/nginx/access.log;
+      sendfile on;
+      server_tokens off;
+      types_hash_max_size 1024;
+      types_hash_bucket_size 512;
+      server_names_hash_bucket_size 128;
+      server_names_hash_max_size 512;
+      keepalive_timeout 65;
+      tcp_nodelay on;
+      gzip on;
+      gzip_disable "MSIE [1-6]\.(?!.*SV1)";
+
+      proxy_cache_path        /var/cache/nginx_global keys_zone=cache:10m levels=2 max_size=2048m inactive=20m;
+
+      include /etc/nginx/conf.d/*.conf;
+      include /etc/nginx/sites-enabled/*;
     }
