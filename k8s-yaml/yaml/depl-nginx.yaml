@@ -27,3 +27,12 @@ spec:
       - name: nginx-config-file
         configMap:
           name: nginx-cfg
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.azure.com/agentpool
+                operator: In
+                values:
+                - aksnp01

@@ -19,4 +19,12 @@ spec:
         image: httpd:2.4.53-alpine
         ports:
         - containerPort: 80
-
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.azure.com/agentpool
+                operator: In
+                values:
+                - aksnp00
