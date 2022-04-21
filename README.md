@@ -1,9 +1,16 @@
 # A proxy benchmark in Azure environment
 
 ## What is it and how it works?
-This is a benchmark, which would serve for load testing various reverse proxies/load balancers and this way prove which is the best one for the given specific needs.
+This is a Terraform project aiming to provide a complete benchmark infrastructure setup, which would serve for load testing various reverse proxies/load balancers and this way prove which is the best one for the given specific needs.
 
-Currently in the repo we have the following setup:
+
+# How to run this Terraform project
+There's a provided Makefile. To run Terraform, you need to: 
+1. Copy .env.example as `.env` and apply the given parameters from your Azure account
+2. Edit /vars.tf and change GLOBAL_RESOURCENAME_PREFIX and GLOBAL_RESOURCENAME_PREFIX_ALPHANUM to whatever suits your needs
+3. Run `make plan` and `make apply`
+
+# What is included in this Terraform project
 
 - a Kubernetes Cluster - to host our reverse proxies and stuff
 - a VM - to connect to and execute tests against the reverse proxies in the K8s Cluster
@@ -14,7 +21,9 @@ The k8s cluster is provisioned with 3 deployments and their corresponding config
 - Nginx and Envoy are set up to reverse proxy to the Apache server
 
 The VM is provisioned with the following benchmarking tools:
-- 
+- Apache benchmark
+- Envoy proxy's Nighthawk
+- Rakyll/Hey
 
 In order to initiate a test, you need to consider a few things:
 
